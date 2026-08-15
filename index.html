@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHABAAN GILL's MD Bot - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #060911;
+      --card-bg: rgba(13, 19, 34, 0.75);
+      --accent: #00e5ff;
+      --accent-glow: rgba(0, 229, 255, 0.35);
+      --wa-green: #25D366;
+      --wa-glow: rgba(37, 211, 102, 0.4);
+      --text-main: #f0f6fc;
+      --text-sub: #8b949e;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(37, 211, 102, 0.1) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow Behind Container */
+    .glow-orb {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      filter: blur(50px);
+      z-index: 0;
+      animation: floatOrb 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(-20px, -20px) scale(0.9); }
+      100% { transform: translate(20px, 20px) scale(1.1); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 32px 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--accent-glow);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0.3; transform: scale(0.9); }
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    /* Live Metrics Cards */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 229, 255, 0.3);
+    }
+
+    .metric-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+
+    /* Quick Country Selector Badges */
+    .quick-codes {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .code-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .code-chip:hover {
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--accent);
+      border-color: var(--accent-glow);
+    }
+
+    /* Input & Pairing Section */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-sub);
+      transition: color 0.3s ease;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 16px 16px 46px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    input[type="text"]:focus + i {
+      color: var(--accent);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #00e5ff 0%, #0077ff 100%);
+      color: #060911;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 6px 28px rgba(0, 229, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* WhatsApp Official Channel Button */
+    .btn-channel {
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      color: var(--wa-green);
+      margin-bottom: 0;
+    }
+
+    .btn-channel:hover {
+      background: rgba(37, 211, 102, 0.22);
+      box-shadow: 0 6px 20px var(--wa-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Pairing Code Display Box */
+    .code-box {
+      display: none;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px dashed var(--accent);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 16px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .code-title {
+      font-size: 11px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .code-display {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 8px 18px;
+      font-size: 12px;
+      border-radius: 10px;
+      margin-bottom: 0;
+      width: auto;
+      display: inline-flex;
+    }
+
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #00e5ff;
+      color: #060911;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0, 229, 255, 0.4);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>ENGINE ONLINE</span>
+      </div>
+      <h1 class="title">SHABAAN GILL's MD Bot</h1>
+      <p class="subtitle">Enter your WhatsApp number to pair your device seamlessly</p>
+    </div>
+
+    <!-- Live System Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value" id="latencyVal">--</div>
+        <div class="metric-label">Latency</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="socketsVal">--</div>
+        <div class="metric-label">Active Sockets</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="uptimeVal">--</div>
+        <div class="metric-label">Uptime</div>
+      </div>
+    </div>
+
+    <!-- Quick Country Code Presets -->
+    <div class="quick-codes">
+      <span class="code-chip" onclick="setPrefix('92')">🇵🇰 +92</span>
+      <span class="code-chip" onclick="setPrefix('1')">🇺🇸 +1</span>
+      <span class="code-chip" onclick="setPrefix('44')">🇬🇧 +44</span>
+      <span class="code-chip" onclick="setPrefix('91')">🇮🇳 +91</span>
+    </div>
+
+    <!-- Pairing Form Input -->
+    <div class="form-group">
+      <div class="input-wrapper">
+        <input type="text" id="phoneNumber" placeholder="e.g. 923143007893" autocomplete="off">
+        <i class="fa-solid fa-mobile-screen"></i>
+      </div>
+    </div>
+
+    <button class="btn btn-submit" id="pairBtn" onclick="requestPairing()">
+      <i class="fa-solid fa-bolt"></i> Generate Pairing Code
+    </button>
+
+    <!-- Code Display Box -->
+    <div class="code-box" id="codeBox">
+      <div class="code-title">Your WhatsApp Pairing Code</div>
+      <div class="code-display" id="codeDisplay">----</div>
+      <button class="btn btn-copy" onclick="copyCode()">
+        <span id="copyBtnText"><i class="fa-regular fa-copy"></i> Copy Code</span>
+      </button>
+    </div>
+
+    <!-- Official WhatsApp Channel Link -->
+    <a href="Https://whatsapp.com/channel/0029VadVVJaF6sn5w7FWnX2n" target="_blank" class="btn btn-channel">
+      <i class="fa-brands fa-whatsapp"></i> Join Official Channel
+    </a>
+
+    <div class="footer">
+      Powered by High-Performance Baileys Multi-Engine • SHABAAN GILL Core
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i> Pairing code copied!
+  </div>
+
+  <script>
+    // Fetch Live Metrics
+    async function fetchMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        document.getElementById('latencyVal').innerText = data.latency || '45ms';
+        document.getElementById('socketsVal').innerText = data.activeSockets !== undefined ? data.activeSockets : '1';
+        document.getElementById('uptimeVal').innerText = data.uptime || '0h';
+      } catch (err) {
+        document.getElementById('latencyVal').innerText = 'Online';
+      }
+    }
+    setInterval(fetchMetrics, 5000);
+    fetchMetrics();
+
+    // Quick Country Code Helper
+    function setPrefix(code) {
+      const input = document.getElementById('phoneNumber');
+      if (!input.value.startsWith(code)) {
+        input.value = code;
+      }
+      input.focus();
+    }
+
+    // Request Pairing Code
+    async function requestPairing() {
+      const numberInput = document.getElementById('phoneNumber').value.trim();
+      const pairBtn = document.getElementById('pairBtn');
+      const codeBox = document.getElementById('codeBox');
+      const codeDisplay = document.getElementById('codeDisplay');
+
+      if (!numberInput) {
+        showToast("Please enter a valid WhatsApp number!");
+        return;
+      }
+
+      pairBtn.disabled = true;
+      pairBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Requesting Code...`;
+
+      try {
+        const response = await fetch(`/pair?number=${encodeURIComponent(numberInput)}`);
+        const data = await response.json();
+
+        if (data.code) {
+          codeDisplay.innerText = data.code;
+          codeBox.style.display = 'block';
+        } else {
+          showToast(data.error || "Failed to generate code.");
+        }
+      } catch (err) {
+        showToast("Server connection error. Please try again.");
+      } finally {
+        pairBtn.disabled = false;
+        pairBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Generate Pairing Code`;
+      }
+    }
+
+    // Copy Code & Show Toast
+    function copyCode() {
+      const code = document.getElementById("codeDisplay").innerText.replace(/\s+/g, '');
+      navigator.clipboard.writeText(code).then(() => {
+        showToast("Pairing code copied to clipboard!");
+      });
+    }
+
+    // Toast Alert Helper
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
