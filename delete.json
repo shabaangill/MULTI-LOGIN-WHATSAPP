@@ -1,0 +1,88 @@
+{
+  "447506101397@s.whatsapp.net": {
+    "AC42508A4E69B7F5125D066D1A7E3A3D": {
+      "key": {
+        "remoteJid": "447506101397@s.whatsapp.net",
+        "fromMe": false,
+        "id": "AC42508A4E69B7F5125D066D1A7E3A3D"
+      },
+      "message": {
+        "conversation": "sock.user",
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "DCjOMaJmlw6H8Q==",
+            "senderTimestamp": "1784824999",
+            "recipientKeyHash": "SUGKZxorfdmh5Q==",
+            "recipientTimestamp": "1784903357"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "CrgRGLPEeMDK7w+siX1nYyHSpLd1tef0jPpcSOHlRh0="
+        }
+      },
+      "pushName": "MR PERFECT 💫"
+    },
+    "AC45719CF4F0A96231042C098FB81747": {
+      "key": {
+        "remoteJid": "447506101397@s.whatsapp.net",
+        "fromMe": false,
+        "id": "AC45719CF4F0A96231042C098FB81747"
+      },
+      "message": {
+        "protocolMessage": {
+          "key": {
+            "remoteJid": "100657491132671@lid",
+            "fromMe": true,
+            "id": "AC42508A4E69B7F5125D066D1A7E3A3D"
+          },
+          "type": "REVOKE"
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "DCjOMaJmlw6H8Q==",
+            "senderTimestamp": "1784824999",
+            "recipientKeyHash": "SUGKZxorfdmh5Q==",
+            "recipientTimestamp": "1784903357"
+          },
+          "deviceListMetadataVersion": 2
+        }
+      },
+      "pushName": "MR PERFECT 💫"
+    }
+  },
+  "120363428322767284@g.us": {
+    "ACCB696235B304DCBAD60F233BF97B85": {
+      "key": {
+        "remoteJid": "120363428322767284@g.us",
+        "fromMe": false,
+        "id": "ACCB696235B304DCBAD60F233BF97B85",
+        "participant": "447506101397@s.whatsapp.net"
+      },
+      "message": {
+        "conversation": "Ok",
+        "messageContextInfo": {
+          "messageSecret": "rmQSDjHP4kGClb20vOodfF1XR/dUaRrg/cRl88yza+4="
+        }
+      },
+      "pushName": "MR PERFECT 💫"
+    },
+    "AC35CE0B47599CE5E50F49338019DFFB": {
+      "key": {
+        "remoteJid": "120363428322767284@g.us",
+        "fromMe": false,
+        "id": "AC35CE0B47599CE5E50F49338019DFFB",
+        "participant": "447506101397@s.whatsapp.net"
+      },
+      "message": {
+        "protocolMessage": {
+          "key": {
+            "remoteJid": "120363428322767284@g.us",
+            "fromMe": true,
+            "id": "ACCB696235B304DCBAD60F233BF97B85"
+          },
+          "type": "REVOKE"
+        }
+      },
+      "pushName": "MR PERFECT 💫"
+    }
+  }
+}
